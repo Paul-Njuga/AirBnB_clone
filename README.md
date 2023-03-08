@@ -1,4 +1,4 @@
-# AirBnB #0 :computer:
+# AirBnB :computer:
 
 This repository depicts a small replica of the [AirBnB](https://www.airbnb.com/) webiste.
 
