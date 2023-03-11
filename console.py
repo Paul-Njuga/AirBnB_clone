@@ -100,9 +100,9 @@ class HBNBCommand(cmd.Cmd):
                 k = "{}.{}".format(words[0], words[1])
                 if k not in all_objs:
                     print("** no instance found **")
-                elif words[2] == "" or words[2] is None:
+                elif len(words) < 3:
                     print("** attribute name missing **")
-                elif words[3] == "" or words[3] is None:
+                elif len(words) < 4:
                     print("** value missing **")
                 else:
                     attr_val = words[3]
