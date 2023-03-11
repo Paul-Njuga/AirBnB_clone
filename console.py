@@ -91,7 +91,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             words = line.split(' ')
             all_objs = storage.all()
-            cls_obj = {key: val for key, val in all_objs.items()}
+            cls_objs = {key: val for key, val in all_objs.items()}
             if words[0] not in storage.classes():
                 print("** class doesn't exist **")
             elif len(words) < 2:
@@ -100,9 +100,9 @@ class HBNBCommand(cmd.Cmd):
                 k = "{}.{}".format(words[0], words[1])
                 if k not in all_objs:
                     print("** no instance found **")
-                elif words[2] == "" or words[2] is None:
+                elif len(words) < 3:
                     print("** attribute name missing **")
-                elif words[3] == "" or words[3] is None:
+                elif len(words) < 4:
                     print("** value missing **")
                 else:
                     attr_val = words[3]
@@ -116,9 +116,10 @@ class HBNBCommand(cmd.Cmd):
                             float(attr_val)
                         else:
                             int(attr_val)
-                    if words[2] in [key for key, val in cls_obj.items()]:
+                    if words[2] in [key for key, val in cls_objs.items()]:
+                        """If key exists, update value."""
                         attr_name = words[2]
-                        cls_obj[attr_name] = words[3]
+                        cls_objs[attr_name] = words[3]
                     else:
                         setattr(all_objs[k], words[2], attr_val)
                     all_objs[k].save()
