@@ -180,6 +180,79 @@ class HBNBCommand(cmd.Cmd):
                 commands[args[1]](args[0] + " " + params.groups()[0] + " " +
                                   rest[0] + " " + rest[1])
 
+    def my_errors(self, line, args_number):
+        """
+        Displays error messages to user
+        Args:
+            line(any): gets user input using command line
+            num_of_args(int): number of input arguments
+        Description:
+            Displays output to the use based on
+            the input commands.
+        """
+        classes = [
+        "BaseModel",
+        "User",
+        ]
+
+        message = [
+                    "** class name missing **",
+                    "** class doesn't exist **",
+                    "** instance id missing **",
+                    "** no instance found **",
+                    "** attribute name missing **",
+                    "** value missing **"
+        ]
+
+        if not line:
+            print(message[0])
+            return 1
+        args = line.split()
+        if args_number >= 1 and args[0] not in classes:
+            print(message[1])
+            return 1
+        elif args_number == 1:
+            return 0
+        if args_number >= 2 and len(args) < 2:
+            print(message[2])
+            return 1
+        d = storage.all()
+
+        for i in range(len(args)):
+            if args[i][0] == '"':
+                args[i] = args[i].replace('"', "")
+        key = args[0] + '.' + args[1]
+        if args_number >= 2 and key not in d:
+            print(message[3])
+            return 1
+        elif args_number == 2:
+            return 0
+        if args_number >= 4 and len(args) < 3:
+            print(message[4])
+            return 1
+        if args_number >= 4 and len(args) < 4:
+            print(message[5])
+            return 1
+        return 0
+
+    def do_destroy(self, args):
+        """
+        Deletes an instance based on the class name and id 
+        Arguments:
+            args: to enter with command: <class name> <id>
+            Example: 'destroy BaseModel 121212'
+        """
+
+        if (self.my_errors(args, 2) == 1):
+            return
+        arguments = args.split()
+        stores = storage.all()
+        if arguments[1][0] == '"':
+            arguments[1] = arguments[1].replace('"',"")
+        key = arguments[0] + '.' + arguments[1]
+        del stores[key]
+        storage.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
