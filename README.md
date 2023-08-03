@@ -1,32 +1,96 @@
-# AirBnB :computer:
+# AirBnB Clone - The Console :computer:
+The console is the first segment of the AirBnB project at ALX that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy on our server a simple copy of the [AirBnB](https://www.airbnb.com/) Website(HBnB).  
+A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
 
-This repository depicts a small replica of the [AirBnB](https://www.airbnb.com/) webiste.
+#### Functionalities of this command interpreter:
+* Create a new object (ex: a new User or a new Place)
+* Retrieve an object from a file, a database etc...
+* Do operations on objects (count, compute stats, etc...)
+* Update attributes of an object
+* Destroy an object
 
-## Table of contents
+## Table of Content
+* [Environment](#environment)
+* [Installation](#installation)
+* [File Descriptions](#file-descriptions)
+* [Usage](#usage)
+* [Examples of use](#examples-of-use)
+* [Bugs](#bugs)
+* [Authors](#authors)
+* [License](#license)
 
-Files | Description
------ | -----------
+## Environment
+This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
 
-## Console :bookmark_tabs:
+## Installation
+* Clone this repository: `git clone "https://github.com/Paul-Njuga/AirBnB_clone.git"`
+* Access AirBnb directory: `cd AirBnB_clone`
+* Run hbnb(interactively): `./console` and enter command
+* Run hbnb(non-interactively): `echo "<command>" | ./console.py`
 
-### How to start it
+## File Descriptions
+[console.py](console.py) - the console contains the entry point of the command interpreter. 
+List of commands this console current supports:
+* `EOF` - exits console 
+* `quit` - exits console
+* `<emptyline>` - overwrites default emptyline method and does nothing
+* `create` - Creates a new instance of`BaseModel`, saves it (to the JSON file) and prints the id
+* `destroy` - Deletes an instance based on the class name and id (save the change into the JSON file). 
+* `show` - Prints the string representation of an instance based on the class name and id.
+* `all` - Prints all string representation of all instances based or not on the class name. 
+* `update` - Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file). 
 
-* some process
+#### `models/` directory contains classes used for this project:
+[base_model.py](/models/base_model.py) - The BaseModel class from which future classes will be derived
+* `def __init__(self, *args, **kwargs)` - Initialization of the base model
+* `def __str__(self)` - String representation of the BaseModel class
+* `def save(self)` - Updates the attribute `updated_at` with the current datetime
+* `def to_dict(self)` - returns a dictionary containing all keys/values of the instance
 
-### How to use it
+Classes inherited from Base Model:
+* [amenity.py](/models/amenity.py)
+* [state.py](/models/state.py)
+* [city.py](/models/city.py)
+* [place.py](/models/place.py)
+* [user.py](/models/user.py)
+* [review.py](/models/review.py)
 
-* some process
+#### `/models/engine` directory contains File Storage class that handles JASON serialization and deserialization :
+[file_storage.py](/models/engine/file_storage.py) - serializes instances to a JSON file & deserializes back to instances
+* `def all(self)` - returns the dictionary __objects
+* `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
+* `def save(self)` - serializes __objects to the JSON file (path: __file_path)
+* ` def reload(self)` -  deserializes the JSON file to __objects
 
-### Examples
+## Examples of use
+```
+vagrantAirBnB_clone$./console.py
+(hbnb) help
 
-* examples
+Documented commands (type help <topic>):
+========================================
+EOF  all  create  destroy  help  quit  show  update
 
-## Bugs :loudspeaker:
+(hbnb) all MyModel
+** class doesn't exist **
+(hbnb) create BaseModel
+7da56403-cc45-4f1c-ad32-bfafeb2bb050
+(hbnb) all BaseModel
+[[BaseModel] (7da56403-cc45-4f1c-ad32-bfafeb2bb050) {'updated_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772167), 'id': '7da56403-cc45-4f1c-ad32-bfafeb2bb050', 'created_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772123)}]
+(hbnb) show BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
+[BaseModel] (7da56403-cc45-4f1c-ad32-bfafeb2bb050) {'updated_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772167), 'id': '7da56403-cc45-4f1c-ad32-bfafeb2bb050', 'created_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772123)}
+(hbnb) destroy BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
+(hbnb) show BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
+** no instance found **
+(hbnb) quit
+```
 
-No known bugs.
+## Bugs
+No known bugs at this time. 
 
-## Authors :black_nib:
+## Authors
+* Paul Njuga - [Github](https://github.com/Paul-Njuga)  
+* Oyondi Rachel - [Github](https://github.com/kema-ray)
 
-**Paul Njuga** [Github](https://github.com/Paul-Njuga)
-\
-**Oyondi Rachel** [Github](https://github.com/kema-ray)
+## License
+Public Domain. No copy write protection.
